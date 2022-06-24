@@ -2,7 +2,11 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
+	_ "net/http/pprof"
 	"sync"
+	"time"
 )
 
 /* 控制协程数量计算slice 字母出现的个数 */
@@ -51,4 +55,19 @@ func main() {
 	}
 	wg.Wait()
 
+	go func() {
+		for {
+			log.Printf("len: %d", Add("go-programming-tour-book"))
+			time.Sleep(time.Microsecond * 10)
+		}
+	}()
+	_ = http.ListenAndServe("0.0.0.0:6060", nil)
+
+}
+
+var datas []string
+func Add(str string) int {
+	data := []byte(str)
+	datas  = append(datas, string(data))
+	return len(datas)
 }

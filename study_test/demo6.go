@@ -8,6 +8,8 @@ package main
  * software: GoLand
 **/
 
+/* 获取二叉树的宽度 */
+
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode

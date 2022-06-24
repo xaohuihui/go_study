@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"time"
 )
 
@@ -35,6 +36,9 @@ func FormatAsDate(t time.Time) string {
 }
 
 func main() {
+	go func() {
+		_ = http.ListenAndServe("0.0.0.0:8081", nil)
+	}()
 	r := gee.New()
 	r.Use(gee.Logger()) // global middleware
 	r.Use(gee.Recovery())
